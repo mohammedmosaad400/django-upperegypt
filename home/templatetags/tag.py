@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#from umalqurra.hijri_date import HijriDate
+from umalqurra.hijri_date import HijriDate
 from django import template
 import  datetime
 register=template.Library()
@@ -7,9 +7,8 @@ register=template.Library()
 def getdatefunction():
 
     today =datetime.date.today()
-    um = ''
-    #um = HijriDate(today.year, today.month, today.day, gr=True)
-    #um = str(um.day) +' '+ str(um.month_name) + ' ' + str(um.year)
+    um = HijriDate(today.year, today.month, today.day, gr=True)
+    um = str(um.day) +' '+ str(um.month_name) + ' ' + str(um.year)
     now = datetime.datetime.now()
     day = now.strftime("%A")
     month = now.strftime("%B")
