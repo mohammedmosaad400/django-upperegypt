@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+{% block title %}<title>هيئة تنمية الصعيد</title>{% endblock %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+</head>
+<body>
+<div class="content">
+<div class="white-top-bar" style="background-color:white;width:auto;height:5px;"></div>
+<div class="top-bar">
+{% load tag %}
+    <div class="datetime" dir="rtl" lang="ar" style="font-weight:bold;">{% getdatefunction  as now %} <strong>{{now}}</strong></div>
+<div class="lang" dir="rtl">
+    {% if user.is_authenticated %}
+    <input type="button" name="en" value="{{user.username}}">
+    <a href="{% url 'logout' %}"><input type="button" value="تسجيل الخروج"></a>
+    {% else %}
+    <a href="{% url 'login' %}"><input type="button" value="تسجيل الدخول"></a>
+    <a href="{% url 'signup' %}"><input type="button" value="إنشاء حساب جديد"></a>
+    {% endif %}
+</div>
+</div>
+
+<div class="main-bar">
+<img id="logo" src="{% static 'img/logo.png' %}">
+<img id="live" src="{% static 'img/live.png' %}">
+</div>
+<!-- Tab links -->
+<div class="tab">
+<button class="tablinks" onclick="openTab(event,'main')" id="defaultOpen" style="font-family:Arabic Typesetting; font-size:22px; padding-right:20px;"><b>|  الرئيسية    </b></button>
+{% if page_path !=   '/home/'  %} <a href=" {% url 'index' %} ">{% endif %} <button class="tablinks" onclick="openTab(event,'investment')" style="font-family:Arabic Typesetting; font-size:22px;"><b>| فرص الإستثمار</b></button>
+{% if page_path !=   '/home/'  %} <a href=" {% url 'index' %} ">{% endif %} <button class="tablinks" onclick="openTab(event,'organization')" style="font-family:Arabic Typesetting; font-size:22px;;"><b>|  الهيئة </b></button>
+{% if page_path !=   '/home/'  %} <a href=" {% url 'index' %} ">{% endif %} <button class="tablinks" onclick="openTab(event,'projects')" style="font-family:Arabic Typesetting; font-size:22px;"><b>|  مشروعات</b></button>
+ <button class="tablinks" onclick="openTab(event,'suggestion')" style="font-family:Arabic Typesetting; font-size:22px;"><b>|  إقتراحات وشكاوى المواطنين</b></button></a>
+{% if page_path !=   '/home/'  %} <a href=" {% url 'index' %} ">{% endif %} <button class="tablinks" onclick="openTab(event,'contact')" style="font-family:Arabic Typesetting; font-size:22px;"><b>|  تواصل معنا</b></button>
+<img style="margin-left:30px;" src="{% static 'img/tools.png' %}" width="200px" height="50px">
+
+</div>
+
+<!-- Tab contents -->
+
+<div id="main" class="tabcontent">
+<div class="tab2" style="float:right" dir="rtl">
+<button class="tab2links" onmouseover="playclip();" onclick="ChangeNewsBar('main2','main1')">أخبار أهل الصعيد</button>
+<br>
+<button class="tab2links" onmouseover="playclip();" onclick="ChangeNewsBar('main1','main2')">أخبار الهيئة</button>
+</div>
+
+{% block newscontent %} {% endblock %}
+
+<!-- SlideShow -->
+<div class="slideshow-container" dir="rtl"> {% block slidercontent %} {% endblock %}
+ </div>
+</div>    
+
+<div id="investment" class="tabcontent">
+<div class="tab2" style="float:right" dir="rtl">
+<button class="tab2links" onmouseover="playclip();" onclick="InnerContentShow('investment1')">مقترحات زراعية</button>
+<br>
+<button class="tab2links" onmouseover="playclip();" onclick="InnerContentShow('investment2')">مقترحات صناعية</button>
+<br>
+<button class="tab2links" onmouseover="playclip();" onclick="InnerContentShow('investment3')">مقترحات تنموية</button>
+<br>
+<button class="tab2links" onmouseover="playclip();" onclick="InnerContentShow('investment4')">مقترحات خدمية</button>
+<br>
+<button class="tab2links" onmouseover="playclip();" onclick="InnerContentShow('investment5')">مقترحات سياحية</button>
+</div>
+      <div class="innercontent" id="investment1" > {% block investment1 %} {% endblock %} </div>
+      <div class="innercontent" id="investment2" > {% block investment2 %} {% endblock %} </div>
+      <div class="innercontent" id="investment3" > {% block investment3 %} {% endblock %} </div>
+      <div class="innercontent" id="investment4" > {% block investment4 %} {% endblock %} </div>
+      <div class="innercontent" id="investment5" > {% block investment5 %} {% endblock %} </div>
+</div>
+
+<div id="organization" class="tabcontent">
+<div class="tab2" style="float:right" dir="rtl">
+<button class="tab2links" onmouseover="playclip();" onclick="InnerContentShow('organization1')">مهام الهيئة</button>
+<br>
+<button class="tab2links" onmouseover="playclip();" onclick="InnerContentShow('organization2')">قيادات الهيئة</button>
+<br>
+<button class="tab2links" onmouseover="playclip();" onclick="InnerContentShow('organization3')">مجلس الإدارة</button>
+<br>
+<button class="tab2links" onmouseover="playclip();" onclick="InnerContentShow('organization4')">قوانين ولوائح</button>
+</div>
+      <div class="innercontent" id="organization1" > {% block organization1 %} {% endblock %} </div>
+      <div class="innercontent" id="organization2" > {% block organization2 %} {% endblock %} </div>
+      <div class="innercontent" id="organization3" > {% block organization3 %} {% endblock %} </div>
+      <div class="innercontent" id="organization4" > {% block organization4 %} {% endblock %} </div>
+</div>
+
+<div id="projects" class="tabcontent">
+<div class="tab2" style="float:right" dir="rtl">
+<button class="tab2links" onmouseover="playclip();"  onclick="InnerContentShow('projects1')">مشروعات تم تنفيذها</button>
+<br>
+<button class="tab2links" onmouseover="playclip();"  onclick="InnerContentShow('projects2')">مشروعات تحت التنفيذ</button>
+<br>
+<button class="tab2links" onmouseover="playclip();"  onclick="InnerContentShow('projects3')">مشروعات مخططه</button>
+</div>
+      <div class="innercontent" id="projects1" > {% block project1 %} {% endblock %} </div>
+      <div class="innercontent" id="projects2" > {% block project2 %} {% endblock %} </div>
+      <div class="innercontent" id="projects3" > {% block project3 %} {% endblock %} </div>
+</div>
+
+<div id="suggestion" class="tabcontent">
+<div class="tab2" style="float:right" dir="rtl">
+<button class="tab2links" onmouseover="playclip();" onclick="InnerContentShow('suggestion1')">تسجيل بيانات الشكوى</button>
+<br>
+<button class="tab2links" onmouseover="playclip();" onclick="InnerContentShow('suggestion2')">مقترحات المواطنين</button>
+<br>
+<button class="tab2links" onmouseover="playclip();" onclick="InnerContentShow('suggestion3')">متابعة الشكوى</button>
+</div>
+    <div class="innercontent" id="suggestion1"> {% block suggestion1 %} {% endblock %} </div>
+    <div class="innercontent" id="suggestion2"> {% block suggestion2 %} {% endblock %} </div>
+    <div class="innercontent" id="suggestion3"> {% block suggestion3 %} {% endblock %} </div>
+    <div class="innercontent" id="suggestion4"> {% block suggestion4 %} {% endblock %} </div>
+
+</div>
+
+<div id="contact" class="tabcontent">
+<div class="tab2" style="float:right" dir="rtl">
+<button class="tab2links" onmouseover="playclip();" onclick="InnerContentShow('contact1')">مكان الهيئة</button>
+<br>
+<button class="tab2links" onmouseover="playclip();" onclick="InnerContentShow('contact2')">تليفونات الهيئة</button>
+</div>
+      <div class="innercontent" id="contact1"> {% block contact1 %} {% endblock %} </div>
+      <div class="innercontent" id="contact2"> {% block contact2 %} {% endblock %} </div>
+
+</div>
+
+
+
+
+
+<!-- News-Bar -->
+<div class="news" style="font-family:Adobe Naskh Medium; margin-left: 20px; margin-top: 20px; margin-bottom: 50px; background-color: beige;">
+<div class="" id="main1">  {% block newstitle %} {% endblock %} </div>
+<div class="" id="main2">  {% block newstitle2 %} {% endblock %} </div>
+{% block pagintation %}
+ {% if is_paginated %}
+    <div class="pagination">
+     <span class="page-links">
+      {% if page_obj.has_previous %}
+       <a href="{{request.path}}?page={{page_obj.previous_page_number}}">previous</a>
+      {% endif %}
+       <span class="page-current">
+         page{{page_obj.number}} of {{page_obj.paginator.num_pages}}.
+         </span>
+         {% if page_obj.has_next %}
+          <a href="{{request.path}}?page={{page_obj.next_page_number}}">next</a>
+         {% endif %}
+     </span>
+    </div>
+ {% endif %}
+{% endblock %}
+</div>
+
+<!-- Footer -->
+<div class="footer"  dir="rtl">
+    <h5><center><a href="{% url 'condition' %}">شروط الإستخدام</a> <a href="#" onclick="InnerContentShow('contact2')">اتصل بنا</a> </center></h5>
+        <h4><center> جميع الحقوق محفوظ  &nbsp; &copy; &nbsp; هيئة تنمية الصعيد</center></h4>
+
+</div>
+    <div class="smallFooter"></div>
+    <div class="logoFooter" style="margin-top: 5px;">
+        <center> 
+            <img src="{% static 'img/logo.jpg' %}" width="50px;" height="50px;">
+            <img src="{% static 'img/pythonlogo.png' %}" width="60px;" height="50px;">    
+            <img src="{% static 'img/django.png' %}" width="60px;" height="50px;" >
+            <img src="{% static 'img/htmlcssjs.png' %}" width="100px;" height="50px;" >
+        </center>
+        <h5 style="margin-top: 0px; margin-bottom: 0px;"><center>&nbsp; RAM Corporation &copy; copyright Reserved</center> </h5>
+        {% if user.is_authenticated %} {% if user.is_staff %} <center><h3><a style="color: black;" href="{% url 'admin:index' %}"><<< &nbsp;لوحة التحكم &nbsp; >>></a></h3></center> {% endif %}{% endif %}   
+    </div>
+    </div>
+<audio>
+<source src="{% static 'sound/click.mp3' %}"></source>
+<source src="{% static 'sound/click.ogg' %}"></source>
+</audio>
+<script type="text/javascript" src="{% static 'js/sound-mouseover.js' %}"></script>
+<script src="{% static 'js/contentviewer.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/tabviewer.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/slideshow.js' %}" type="text/javascript"></script>
+</body>
+</html> 

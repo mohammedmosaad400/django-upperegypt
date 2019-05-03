@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+{% block newscontent %}
+<div style="width: 500px; margin-top: -10px; margin-left: -150px; " dir="rtl">
+<center><h1> {{news.news_Title}}</h1></center> 
+<h5>{{news.news_Date}}</h5>
+<img style="width: 500px; max-height: 500px; margin-right: 0px;" src="../../{{news.get_img_path}}" >
+<center><p dir="rtl">{{news.news_Content}}</p></center>
+</div>
+{% endblock %}
+
+{% block newstitle %}
+<center><h2 style="background-color: white; color:purple; border: 1px solid #ccc; width:240px; padding-top:10px;">
+    <a style="text-decoration: none" href="{% url 'index' %}"><center>أخبار أهل الصعيد</center></a></h2></center>
+<h1><center> {{news.news_Title}}</center> </h1>
+
+{% endblock %}

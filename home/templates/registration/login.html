@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head><title>تسجيل الدخول</title></head>
+    <body style="background-image: url(../../static/img/slideShow/e4.jpg);background-repeat: no-repeat; background-position: center; background-size: cover; ">
+       <center> <div class="content" style="width: 400px; margin-top: 100px; color: white; font-weight: bold; font-size: 15px; background-color: rgba(0,0,0,0.8)">
+<h2 style="background-color: rgba(0,0,0,0.8); height: 50px; padding-top: 25px;">Login</h2>
+{% if form.errors %}
+<p>Your username or password incorrect. please try again.</p>
+{% endif %}
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+<table>
+    <tr>
+    <td>{{ form.username.label_tag}}</td>
+        <td>{{ form.username }}</td>
+    </tr>
+    <tr>
+    <td>{{ form.password.label_tag }}</td>
+        <td>{{ form.password }}</td>
+    </tr>
+    </table>
+    <button type="submit" style="margin: 20px; width: 230px;">Login</button>
+</form>
+<p style="margin-bottom: 100px; padding: 25px;"><a href="{% url 'password_reset' %}">Forget Password ?</a></p>
+        </div></center>
+    </body>
+</html>

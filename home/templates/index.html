@@ -1,0 +1,347 @@
+
+{% extends "base_generic.html" %}
+{% block newstitle %}
+<center><h2 style="background-color: white; color:purple; border: 1px solid #ccc; width:240px; padding-top:10px;">
+    <a style="text-decoration: none" href="{% url 'index' %}"><center>أخبار أهل الصعيد</center></a></h2></center>
+{% if all_news %}
+    {% for news in all_news %}
+        <img dir="rtl" style="cursor:pointer; float: right; margin-right: 5px;" src="../{{news.get_img_path}}" width="90px" height="60px">
+        <h4 dir="ltr" style="width:200px; margin-right:10px; cursor:pointer;">
+            <a style="text-decoration: none; color: black;" href="{% url 'news-detail' news.pk %}"><center>{{news.news_Title}}</center></a> 
+        </h4>
+        <br>
+    {% endfor %}
+
+{% else %}
+<h4>no news</h4>
+{% endif %}      
+{% endblock %}
+
+{% block newstitle2 %}
+<center><h2 style="background-color: white; color:purple; border: 1px solid #ccc; width:240px; padding-top:10px;">
+    <a style="text-decoration: none" href="{% url 'index' %}"><center>أخبار هيئة تنمية الصعيد</center></a></h2></center>
+{% if all_news2 %}
+    {% for news in all_news2 %}
+        <img dir="rtl" style="cursor:pointer; float: right; margin-right: 5px;" src="../{{news.get_img_path}}" width="90px" height="60px">
+        <h4 dir="ltr" style="width:200px; margin-right:10px; cursor:pointer;">
+            <a style="text-decoration: none; color: black;" href="{% url 'news2-detail' news.pk %}"><center>{{news.news_Title}}</center></a> 
+        </h4>
+        <br>
+    {% endfor %}
+
+{% else %}
+<h4>no news</h4>
+{% endif %}      
+{% endblock %}
+
+
+
+
+{% block slidercontent %}
+{% if all_slide %}
+        {% for slide in all_slide %}
+
+    <div class="mySlides fade" style="background-color: black; width: 600px; height: 350px;">
+    <div class="numbertext">{{slide.slide_album}}</div>
+    <img width="600px" height="350px;" src="../{{slide.get_img_path}}" style="width: 100%;">
+    <div class="text" style="width: inherit;">{{slide.slide_caption}}</div>
+    </div>
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" style="margin-left: -172px;" onclick="plusSlides(1)">&#10095;</a>
+    <div style="text-align: center">
+    <span class="dot" onclick="currentSlide({{slide.pk}})"></span>
+   </div>
+       {% endfor %}
+
+   
+{% else %}
+<h4>no slides</h4>
+{% endif %} 
+{% endblock %}  
+
+
+{% block suggestion1 %} 
+<div style="background-color: beige; width: 400px;margin-top: 20px; margin-left: -50px; padding-top: 10px; padding-bottom: 20px;">
+    <center><u><h2 style="font-weight: bold; font-family: Arabic Typesetting; font-size: 43px;">شكاوى المواطنين</h2></u>
+<form method="POST">
+{% csrf_token %}
+{% for field in complaint_form %}
+    <p>
+     <small dir="rtl" style="font-weight: bold; font-family: Arabic Typesetting;  font-size: 25px;">{{ field }}</small>
+     <small dir="ltr" style="font-weight: bold; font-family: Arabic Typesetting;  font-size: 25px;">{{ field.help_text }} &nbsp;  &nbsp;</small>
+   
+    {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+    {% endfor %}
+    </p>
+{% endfor %}
+    <button type="submit" style="width: 200px; height: 40px; background-color: rgba(0,0,0,0.8); color: white; font-family: Arabic Typesetting;  font-size: 20px;">إرسال الشكوى</button>
+</form></center>
+</div>
+{% endblock %}
+
+{% block suggestion2 %} 
+<div style="background-color: beige; width: 400px;margin-top: 20px; margin-left: -50px; padding-top: 10px; padding-bottom: 20px;">
+    <center><u><h2 style="font-weight: bold; font-family: Arabic Typesetting; font-size: 43px;">مقترحات المواطنين</h2></u>
+<form method="POST">
+{% csrf_token %}
+{% for field in suggestion_form %}
+    <p>
+     <small dir="rtl" style="font-weight: bold; font-family: Arabic Typesetting;  font-size: 25px;">{{ field }}</small>
+     <small dir="ltr" style="font-weight: bold; font-family: Arabic Typesetting;  font-size: 25px;">{{ field.help_text }} &nbsp;  &nbsp;</small>
+   
+    {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+    {% endfor %}
+    </p>
+{% endfor %}
+    <button type="submit" style="width: 200px; height: 40px; background-color: rgba(0,0,0,0.8); color: white; font-family: Arabic Typesetting;  font-size: 20px;">إرسال الإقتراح</button>
+</form></center>
+</div>
+{% endblock %}
+
+{% block suggestion3 %} 
+<div style="background-color: beige; width: 400px;margin-top: 20px; margin-left: -50px; padding-top: 10px; padding-bottom: 20px;">
+<center><u><h2 style="font-weight: bold; font-family: Arabic Typesetting; font-size: 43px;">متابعة الشكوى</h2></u>
+    <h4>يمكنك متابعة موقف الشكوى التي تقدمت بها والإجراءات التي تم اتخاذها بشأنها من خلال الرقم القومي كما يلي</h4>
+    <form  method="get" onsubmit="return Complaint_follow()" >
+    <input id="complainter-id"  type="text" > <small dir="rtl" style="font-weight: bold; font-family: Arabic Typesetting;  font-size: 25px;">الرقم القومي</small>
+    <button  type="submit" style="margin-top: 50px; width: 200px; height: 40px; background-color: rgba(0,0,0,0.8); color: white; font-family: Arabic Typesetting;  font-size: 20px;">بحث</button>
+    </form>
+</center>
+</div>
+{% endblock %}
+
+{% block suggestion4 %} 
+<div style=" width: 400px;margin-top: 20px; margin-left: -50px; padding-top: 10px; padding-bottom: 20px;">
+    <center>
+{% if complaint_follow %}
+{% for complaint in complaint_follow %}
+     <div style="display: none; background-color: beige; margin-bottom: 50px; padding: 20px;" class ="{{ complaint.Complaint_writer_id }} complaints_follow">
+     <h2 dir="rtl"><u>عنوان الشكوى : {{complaint.Complaint_title}}</u></h2>
+     <h3 dir="rtl">مرسل الشكوى : {{complaint.Complaint_writer}}</h3>
+     <small dir="rtl" style="font-weight: bold; font-family: Arabic Typesetting;  font-size: 20px;">رقم الهاتف : {{ complaint.Complaint_writer_id }}</small><br>
+     <small dir="rtl" style="font-weight: bold; font-family: Arabic Typesetting;  font-size: 20px;">البريد الإلكتروني : {{ complaint.Complaint_email }}</small>
+         <br>
+     <small dir="rtl">التاريخ : {{ complaint.Complaint_date }}</small><br><br>
+         
+      <strong>محتوى الشكوى</strong><p style="background-color: red; color: white; font-weight: bold; padding: 10px;">{{complaint.Complaint_content}}</p><br>
+      <strong>الرد على الشكوى</strong><p style="background-color: green; color: white; font-weight: bold; padding: 10px;">{{complaint.Complaint_reply}}</p>
+     </div>
+{% endfor %}
+{% endif %}
+</center>
+</div>
+{% endblock %}
+
+{% block investment1 %}
+<div style="background-color: beige; width: 400px;margin-top: 20px; margin-left: -50px; padding-top: 10px; padding-bottom: 20px;">
+    <center><u><h2 style="font-weight: bold; font-family: Arabic Typesetting; font-size: 43px;">مقترحات زراعية</h2></u></center>
+    {% if agriculture_suggestion %}
+    {% for suggestion in agriculture_suggestion %}
+    <center>
+        <h2>{{ suggestion.title }}</h2>
+        <p> {{ suggestion.content}} </p>
+        <br>
+    </center>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
+
+
+{% block investment2 %}
+<div style="background-color: beige; width: 400px;margin-top: 20px; margin-left: -50px; padding-top: 10px; padding-bottom: 20px;">
+    <center><u><h2 style="font-weight: bold; font-family: Arabic Typesetting; font-size: 43px;">مقترحات صناعية</h2></u></center>
+    {% if industrial_suggestion %}
+    {% for suggestion in industrial_suggestion %}
+    <center>
+        <h2>{{ suggestion.title }}</h2>
+        <p> {{ suggestion.content}} </p>
+                <br>
+    </center>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
+    
+    {% block investment3 %}
+<div style="background-color: beige; width: 400px;margin-top: 20px; margin-left: -50px; padding-top: 10px; padding-bottom: 20px;">
+    <center><u><h2 style="font-weight: bold; font-family: Arabic Typesetting; font-size: 43px;">مقترحات تنموية</h2></u></center>
+    {% if development_suggestion %}
+    {% for suggestion in development_suggestion %}
+    <center>
+        <h2>{{ suggestion.title }}</h2>
+        <p> {{ suggestion.content}} </p>
+                <br>
+    </center>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
+
+
+{% block investment4 %}
+<div style="background-color: beige; width: 400px;margin-top: 20px; margin-left: -50px; padding-top: 10px; padding-bottom: 20px;">
+    <center><u><h2 style="font-weight: bold; font-family: Arabic Typesetting; font-size: 43px;">مقترحات خدمية</h2></u></center>
+    {% if service_suggestion %}
+    {% for suggestion in service_suggestion  %}
+    <center>
+        <h2>{{ suggestion.title }}</h2>
+        <p> {{ suggestion.content}} </p>
+                <br>
+    </center>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
+    
+
+    {% block investment5 %}
+<div style="background-color: beige; width: 400px;margin-top: 20px; margin-left: -50px; padding-top: 10px; padding-bottom: 20px;">
+    <center><u><h2 style="font-weight: bold; font-family: Arabic Typesetting; font-size: 43px;">مقترحات سياحية</h2></u></center>
+    {% if tourist_suggestion %}
+    {% for suggestion in tourist_suggestion %}
+    <center>
+        <h2>{{ suggestion.title }}</h2>
+        <p> {{ suggestion.content}} </p>
+                <br>
+    </center>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
+
+
+{% block organization1 %}
+<div style="background-color: beige; width: 400px;margin-top: 20px; margin-left: -50px; padding-top: 10px; padding-bottom: 20px;">
+    <center><u><h2 style="font-weight: bold; font-family: Arabic Typesetting; font-size: 43px;">مهام الهيئة</h2></u></center>
+    {% if organization_task %}
+    {% for task in organization_task %}
+    <center>
+        <h3>{{ task.organization_task }}</h3>
+        <br>
+    </center>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
+
+
+{% block organization2 %}
+<div style="background-color: beige; width: 400px;margin-top: 20px; margin-left: -50px; padding-top: 10px; padding-bottom: 20px;">
+    <center><u><h2 style="font-weight: bold; font-family: Arabic Typesetting; font-size: 43px;">قيادات الهيئة</h2></u></center>
+    {% if organization_leader %}
+    {% for leader in organization_leader %}
+    <center>
+        <h2>{{ leader.organization_leader }}</h2>
+                <br>
+    </center>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
+    
+    {% block organization3 %}
+<div style="background-color: beige; width: 400px;margin-top: 20px; margin-left: -50px; padding-top: 10px; padding-bottom: 20px;">
+    <center><u><h2 style="font-weight: bold; font-family: Arabic Typesetting; font-size: 43px;">مجلس الإدارة</h2></u></center>
+    {% if organization_council %}
+    {% for member in organization_council %}
+    <center>
+        <h2>{{ member.title }}</h2>
+        <h1> {{ member.name}} </h1>
+                <br>
+    </center>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
+
+
+{% block organization4 %}
+<div style="background-color: beige; width: 400px;margin-top: 20px; margin-left: -50px; padding-top: 10px; padding-bottom: 20px;">
+    <center><u><h2 style="font-weight: bold; font-family: Arabic Typesetting; font-size: 43px;">قوانين ولوائح</h2></u></center>
+    {% if organization_law %}
+    {% for law in organization_law %}
+    <center>
+        <h2>{{ law.law_title }}</h2>
+        <p> {{ law.law_date}} <a href="../{{law.get_doc_path}}">قم بتحميل الوثيقة من هنا</a></p>
+                <br>
+    </center>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block project1 %}
+<div style="background-color: beige; width: 400px;margin-top: 20px; margin-left: -50px; padding-top: 10px; padding-bottom: 20px;">
+    <center><u><h2 style="font-weight: bold; font-family: Arabic Typesetting; font-size: 43px;">مشروعات تم تنفيذها</h2></u></center>
+    {% if project_ended %}
+    {% for project in project_ended %}
+    <center>
+        <h3>{{ project.project_name }}</h3>
+        <h3>{{ project.project_description }}</h3>
+        <br>
+    </center>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
+
+
+{% block project2 %}
+<div style="background-color: beige; width: 400px;margin-top: 20px; margin-left: -50px; padding-top: 10px; padding-bottom: 20px;">
+    <center><u><h2 style="font-weight: bold; font-family: Arabic Typesetting; font-size: 43px;">مشروعات تحت التنفيذ</h2></u></center>
+    {% if project_processing %}
+    {% for project in project_processing %}
+    <center>
+        <h3>{{ project.project_name }}</h3>
+        <h3>{{ project.project_description }}</h3>
+                <br>
+    </center>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
+    
+    {% block project3 %}
+<div style="background-color: beige; width: 400px;margin-top: 20px; margin-left: -50px; padding-top: 10px; padding-bottom: 20px;">
+    <center><u><h2 style="font-weight: bold; font-family: Arabic Typesetting; font-size: 43px;">مشروعات مخططه</h2></u></center>
+    {% if project_planned %}
+    {% for project in project_planned %}
+    <center>
+        <h3>{{ project.project_name }}</h3>
+        <h3>{{ project.project_description }}</h3>
+                <br>
+    </center>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block contact1 %}
+<div style="background-color: beige; width: 400px;margin-top: 20px; margin-left: -50px; padding-top: 10px; padding-bottom: 20px;">
+    <center><u><h2 style="font-weight: bold; font-family: Arabic Typesetting; font-size: 43px;">مكان الهيئة</h2></u></center>
+    {% if location %}
+    {% for loc in location %}
+    <center><h2>{{ loc.location }}</h2></center>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
+
+
+{% block contact2 %}
+<div style="background-color: beige; width: 400px;margin-top: 20px; margin-left: -50px; padding-top: 10px; padding-bottom: 20px;">
+    <center><u><h2 style="font-weight: bold; font-family: Arabic Typesetting; font-size: 43px;">تليفونات الهيئة</h2></u></center>
+    {% if phone %}
+    {% for number in phone %}
+    <center><h2>{{ number.phone }}</h2></center>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
+    
+    
+    
+    

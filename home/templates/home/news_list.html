@@ -1,0 +1,14 @@
+{% extends "base_generic.html" %}
+{% block newscontent %}
+{% if news_list %}
+    {% for news in news_list %}
+        <img style="cursor:pointer; float:right; margin-right:145px;" src="../../{{news.get_img_path}}" width="90px" height="60px">
+        <h4 dir="ltr" style="width:350px; margin-right:10px; cursor:pointer;">
+            <a style="text-decoration: none; color: black;" href="{% url 'news-detail' news.pk %}"> {{news.news_Title}}  </a> 
+        </h4>
+        <br>
+    {% endfor %}
+{% else %}
+<p>no news</p>
+{% endif %}
+{% endblock %}

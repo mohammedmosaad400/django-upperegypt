@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head><title>إنشاء حساب جديد</title></head>
+    <body style="background-image: url(../static/img/slideShow/e4.jpg);background-repeat: no-repeat; background-position: center; background-size: cover; ">
+       <center> <div class="content" style="width: 400px; margin-top: 60px; color: white; font-weight: bold; font-size: 15px; background-color: rgba(0,0,0,0.8)">
+<h2 style="background-color: rgba(0,0,0,0.8); height: 50px; padding-top: 25px;">Sign up</h2>
+<form method="post">
+{% csrf_token %}
+{% for field in form %}
+    <p>
+    {{ field.label_tag }} &nbsp;  &nbsp;
+    {{ field }}
+    {% if field.help_text %}
+      <br>  <small style="color: yellow; font-weight: bold;">{{ field.help_text }}</small>
+    {% endif %}
+    {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+    {% endfor %}
+    </p>
+{% endfor %}
+    <button type="submit" style="width: 400px; height: 40px;">Sign Up</button>
+</form>
+        </div></center>
+    </body>
+</html>
