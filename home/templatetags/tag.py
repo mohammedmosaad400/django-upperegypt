@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from umalqurra.hijri_date import HijriDate
+from .umalqurra.hijri_date import HijriDate
 from django import template
 import  datetime
 register=template.Library()
